@@ -1,0 +1,572 @@
+<ScreenChooseMap>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/map_background.png'
+    FloatLayout:
+        Label:
+            text: "Select Map"
+            color: 0.98, 0.65, 0.007, 1
+            size_hint: 0.3, 0.2
+            font_size: '30sp'
+            bold: 'true'
+            pos_hint: {'x':0.35, 'y':0.8 }
+
+        Carousel:
+            id: map_options
+            direction: 'right'
+            size_hint: 0.8, 0.7
+            pos_hint: {'x':.1, 'y':.3 }
+            scroll_timeout: 0
+            Image:
+                id: map_a
+                source: 'images/map_a.png'
+            Image:
+                id: map_b
+                source: 'images/map_b.png'
+
+        Button:
+            text: '<'
+            id: button_a
+            background_color : (1, 1, 1, 1)
+            size_hint: 0.15, 0.05
+            pos_hint: {'x':0.225, 'y':.40 }
+            on_press: app.choose_map(-1)
+            on_press: app.root.get_screen('screen_choose_map').ids.map_options.load_previous()
+
+        Button:
+            text: '>'
+            id: button_b
+            background_color : 1, 1, 1, 1
+            size_hint: 0.15, 0.05
+            pos_hint: {'x':0.625, 'y':.40 }
+            on_press: app.choose_map(1)
+            on_press: app.root.get_screen('screen_choose_map').ids.map_options.load_next()
+
+        Button:
+            text: "Select Goals"
+            background_color : 1, 1, 1, 1
+            size_hint: 0.4, 0.05
+            pos_hint: {'x':.3, 'y':0.2 }
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0
+                root.manager.current = 'screen_choose_goal'
+
+<ScreenChooseGoal>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/goal_background.png'
+    FloatLayout:
+        Label:
+            text: "Select Goals"
+            color: 0.98, 0.65, 0.007, 1
+            size_hint: 0.3, 0.2
+            font_size: '30sp'
+            bold: 'true'
+            pos_hint: {'x':0.35, 'y':0.8 }
+        Image:
+            source: 'images/goal_a.png'
+            size_hint: 0.15, 0.15
+            pos_hint: {'x':.1, 'y':.65 }
+            allow_stretch: 'False'
+        Spinner:
+            size_hint: 0.55, 0.05
+            #size: 200, 30
+            pos_hint: {'x':0.3, 'y':0.7 }
+            text: 'Select...'
+            values: 'Borderlands', 'Canal Lake', 'Great City', 'Greenbough', 'Greengold Plains', 'Lost Barony','Mages Valley', 'Sentinel Wood', 'Shieldgate', 'Shoreside Expanse', 'Stoneside Forest', 'The Broken Road', 'The Cauldrons', 'The Golden Granary', 'Treetower', 'Wildholds'
+            on_text:
+                app.choose_goal("A",self.text)
+        Image:
+            source: 'images/goal_b.png'
+            size_hint: 0.15, 0.15
+            pos_hint: {'x':.1, 'y':.55 }
+            allow_stretch: 'False'
+        Spinner:
+            size_hint: 0.55, 0.05
+            #size: 200, 30
+            pos_hint: {'x':0.3, 'y':0.6 }
+            text: 'Select...'
+            values: 'Borderlands', 'Canal Lake', 'Great City', 'Greenbough', 'Greengold Plains', 'Lost Barony','Mages Valley', 'Sentinel Wood', 'Shieldgate', 'Shoreside Expanse', 'Stoneside Forest', 'The Broken Road', 'The Cauldrons', 'The Golden Granary', 'Treetower', 'Wildholds'
+            on_text:
+                app.choose_goal("B",self.text)
+        Image:
+            source: 'images/goal_c.png'
+            size_hint: 0.15, 0.15
+            pos_hint: {'x':.1, 'y':.45 }
+            allow_stretch: 'False'
+
+        Spinner:
+            size_hint: 0.55, 0.05
+            #size: 200, 30
+            pos_hint: {'x':0.3, 'y':0.5 }
+            text: 'Select...'
+            values: 'Borderlands', 'Canal Lake', 'Great City', 'Greenbough', 'Greengold Plains', 'Lost Barony','Mages Valley', 'Sentinel Wood', 'Shieldgate', 'Shoreside Expanse', 'Stoneside Forest', 'The Broken Road', 'The Cauldrons', 'The Golden Granary', 'Treetower', 'Wildholds'
+            on_text:
+                app.choose_goal("C",self.text)
+        Image:
+            source: 'images/goal_d.png'
+            size_hint: 0.15, 0.15
+            pos_hint: {'x':.1, 'y':.35 }
+            allow_stretch: 'False'
+        Spinner:
+            size_hint: 0.55, 0.05
+            #size: 200, 30
+            pos_hint: {'x':0.3, 'y':0.4 }
+            text: 'Select...'
+            values: 'Borderlands', 'Canal Lake', 'Great City', 'Greenbough', 'Greengold Plains', 'Lost Barony','Mages Valley', 'Sentinel Wood', 'Shieldgate', 'Shoreside Expanse', 'Stoneside Forest', 'The Broken Road', 'The Cauldrons', 'The Golden Granary', 'Treetower', 'Wildholds'
+            on_text:
+                app.choose_goal("D",self.text)
+        Button:
+            text: "Start Game"
+            background_color : 1, 1, 1, 1
+            size_hint: 0.4, 0.05
+            pos_hint: {'x':.30, 'y':0.2 }
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0
+                root.manager.current = 'screen_game'
+                app.generate_map()
+
+        Button:
+            text: "Back"
+            background_color : 1, 1, 1, 1
+            size_hint: 0.4, 0.05
+            pos_hint: {'x':.30, 'y':0.125 }
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0
+                root.manager.current = 'screen_choose_map'
+
+<ScreenGame>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/game_background.png'
+    grid: Grid
+    coin_disp: Coin
+    season_disp: End
+    total_disp: Total
+
+    sp: spring
+    sp_score_A: sp_score_A
+    sp_score_B: sp_score_B
+    sp_score_coin: sp_score_coin
+    sp_score_monster: sp_score_monster
+    sp_score : sp_score
+
+    su: summer
+    su_score_B: su_score_B
+    su_score_C: su_score_C
+    su_score_coin: su_score_coin
+    su_score_monster: su_score_monster
+    su_score: su_score
+
+    f: fall
+    f_score_C: f_score_C
+    f_score_D: f_score_D
+    f_score_coin: f_score_coin
+    f_score_monster: f_score_monster
+    f_score: f_score
+
+    w: winter
+    w_score_D: w_score_D
+    w_score_A: w_score_A
+    w_score_coin: w_score_coin
+    w_score_monster: w_score_monster
+    w_score: w_score
+
+    FloatLayout:
+        BoxLayout:
+            size_hint: 0.8,0.05
+            pos_hint: {'x':0.1, 'y':0.925 }
+            padding: 0
+            spacing: 30
+            Button:
+                #text: 'R'
+                background_color : 1, 0, 0, 1
+                background_normal : 'images/village.png'
+                border: 0, 0, 0, 0
+                on_press:
+                    app.on_color_press('R')
+            Button:
+                #text: 'G'
+                background_color : 0, 1, 0, 1
+                background_normal : 'images/forest.png'
+                border: 0, 0, 0, 0
+                on_press:
+                    app.on_color_press('G')
+            Button:
+                #text: 'B'
+                background_color : 0, 0, 1, 1
+                background_normal : 'images/water.png'
+                border: 0, 0, 0, 0
+                on_press:
+                    app.on_color_press('B')
+            Button:
+                #text: 'Y'
+                background_color : 1, 1, 0, 1
+                background_normal : 'images/farm.png'
+                border: 0, 0, 0, 0
+                on_press:
+                    app.on_color_press('Y')
+            Button:
+                #text: 'M'
+                background_color: 1, 0, 1, 1
+                background_normal : 'images/monster.png'
+                border: 0, 0, 0, 0
+                on_press:
+                    app.on_color_press('M')
+
+        BoxLayout:
+            id: Grid
+            size_hint: 1,0.6
+            pos_hint: {'x':0, 'y':0.3 }
+
+        TextInput:
+            id: End
+            text: 'Sp'
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.225, 'y':0.25}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        Button:
+            background_color: 1, 1, 1, 1
+            text: "<"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.125, 'y':0.25}
+            on_press:
+                app.on_end_press(-1)
+
+        Button:
+            background_color: 1, 1, 1, 1
+            text: ">"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.325, 'y':0.25}
+            on_press:
+                app.on_end_press(+1)
+
+        TextInput:
+            id: Coin
+            text: '0'
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.675, 'y':0.25}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        Button:
+            background_color: 1, 1, 0, 0.5
+            text: "-$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.575, 'y':0.25}
+            on_press:
+                app.on_coin_press(-1)
+
+        Button:
+            background_color: 1, 1, 0, 0.5
+            text: "+$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.775, 'y':0.25}
+            on_press:
+                app.on_coin_press(+1)
+
+        Button:
+            id: spring
+            text: "Sp"
+            background_color: 0.1961, 0.8039, 0.1961, 0.5
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.075, 'y':0.165}
+            on_press:
+                app.on_season_press("Sp",'A','B')
+
+        TextInput:
+            id: sp_score_A
+            text: "A"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.175, 'y':0.2}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: sp_score_B
+            text: "B"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.275, 'y':0.2}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: sp_score_coin
+            text: "$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.175, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: sp_score_monster
+            text: "M"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.275, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: sp_score
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.375, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            valign: 'middle'
+            #font_size: self.height - 55
+            use_bubble: False
+
+        Button:
+            id: summer
+            text: "Su"
+            disabled: True
+            background_color: 0.1961, 0.8039, 0.1961, 1
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.525, 'y':0.165}
+            on_press:
+                app.on_season_press("Su",'B','C')
+
+        TextInput:
+            id: su_score_B
+            text: "B"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.625, 'y':0.2}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: su_score_C
+            text: "C"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.725, 'y':0.2}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: su_score_coin
+            text: "$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.625, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: su_score_monster
+            text: "M"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.725, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: su_score
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.825, 'y':0.165}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            valign: 'middle'
+            #font_size: self.height - 55
+            use_bubble: False
+
+        Button:
+            id: fall
+            text: "F"
+            disabled: True
+            background_color: 1, 0.6471, 0, 1
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.075, 'y':0.07}
+            on_press:
+                app.on_season_press("F",'C','D')
+
+        TextInput:
+            id: f_score_C
+            text: "C"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.175, 'y':0.105}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: f_score_D
+            text: "D"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.275, 'y':0.105}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: f_score_coin
+            text: "$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.175, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: f_score_monster
+            text: "M"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.275, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: f_score
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.375, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            valign: 'middle'
+            #font_size: self.height - 55
+            use_bubble: False
+
+        Button:
+            id: winter
+            text: "W"
+            disabled: True
+            background_color: 0.7647, 0.9020, 1.0000, 1
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.525, 'y':0.07}
+            on_press:
+                app.on_season_press("W",'D','A')
+
+        TextInput:
+            id: w_score_D
+            text: "D"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.625, 'y':0.105}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: w_score_A
+            text: "A"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.725, 'y':0.105}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: w_score_coin
+            text: "$"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.625, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: w_score_monster
+            text: "M"
+            size_hint: 0.1,0.035
+            pos_hint: {'x': 0.725, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            font_size: self.height - 12
+            use_bubble: False
+
+        TextInput:
+            id: w_score
+            size_hint: 0.1,0.07
+            pos_hint: {'x': 0.825, 'y':0.07}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            valign: 'middle'
+            #font_size: self.height - 55
+            use_bubble: False
+
+        Button:
+            text: "Total"
+            background_color: 1, 1, 1, 1
+            size_hint: 0.2,0.04
+            pos_hint: {'x': 0.075, 'y':0.015}
+            on_press:
+                app.on_total_press()
+
+        TextInput:
+            id: Total
+            size_hint: 0.2,0.04
+            pos_hint: {'x': 0.275, 'y':0.015}
+            multiline: False
+            readonly: True
+            halign: 'center'
+            valign: 'middle'
+            font_size: self.height - 12
+            use_bubble: False
+
+        Button:
+            text: "Back"
+            background_color : 1, 1, 1, 1
+            size_hint: 0.2, 0.04
+            pos_hint: {'x':0.625, 'y':0.015 }
+            on_press:
+                app.on_back_press()
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0
+                root.manager.current = 'screen_choose_goal'
