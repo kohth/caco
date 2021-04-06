@@ -89,50 +89,6 @@ class ScreenApp(App):
             x_pos = 1
         self.screen_manager.get_screen(name="screen_game").grid.add_widget(self.map_layout)
 
-    # def generate_map(self):
-    #     self.map = [['X' for i in range(13)] for j in range(13)]
-    #     for i in range(13):
-    #         self.map[i][0] = 'N'
-    #         self.map[i][-1] = 'N'
-    #         self.map[0][i] = 'N'
-    #         self.map[-1][i] = 'N'
-    #     if self.selected_map == 'a':
-    #         mountain_ind = [[2, 4], [3, 9], [6, 6], [9, 3], [10, 8]]
-    #         self.ruins_ind = [[3, 2], [2, 6], [3, 10], [9, 2], [10, 6], [9, 10]]
-    #     else:
-    #         mountain_ind = [[2, 9], [3, 4], [8, 6], [9, 10], [10, 3]]
-    #         self.ruins_ind = [[2, 7], [3, 3], [5, 7], [7, 2], [8, 9], [10, 4]]
-    #         tear_ind = [[4, 6], [5, 6], [6, 6], [7, 6], [5, 5], [6, 5], [6, 7]]
-    #         for i in range(len(tear_ind)):
-    #             self.map[tear_ind[i][0]][tear_ind[i][1]] = 'H'
-    #     for i in range(len(mountain_ind)):
-    #         self.map[mountain_ind[i][0]][mountain_ind[i][1]] = 'P'
-    #
-    #     y_pos = 'A'
-    #     x_pos = 1
-    #     self.map_layout = BoxLayout(orientation='vertical')
-    #     for i in range(11):
-    #         m_layout = BoxLayout()
-    #         for j in range(11):
-    #             pos = y_pos + str(x_pos)
-    #             if self.ruins_ind.count([i + 1, j + 1]) == 1:
-    #                 label = 'C'
-    #             else:
-    #                 label = self.map[i + 1][j + 1]
-    #             if self.map[i + 1][j + 1] == 'P' or self.ruins_ind.count([i + 1, j + 1]) == 1:
-    #                 square = Button(text=label, pos_hint={"center_x": 0.5, "center_y": 0.5},
-    #                                 background_color=self.colors[self.map[i + 1][j + 1]])
-    #             else:
-    #                 square = Button(pos_hint={"center_x": 0.5, "center_y": 0.5},
-    #                                 background_color=self.colors[self.map[i + 1][j + 1]])
-    #             square.bind(on_press=partial(self.on_square_press, pos))
-    #             m_layout.add_widget(square)
-    #             x_pos += 1
-    #         self.map_layout.add_widget(m_layout)
-    #         y_pos = chr(ord(y_pos) + 1)
-    #         x_pos = 1
-    #     self.screen_manager.get_screen(name="screen_game").grid.add_widget(self.map_layout)
-
     def on_color_press(self, color_id):
         self.selected_color= color_id
 
