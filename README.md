@@ -42,4 +42,4 @@ Useful Tutorials
 
 Additional Resources
 --------------------
-Many images displayed in the game are taken from screenshots of Cartographer games
+Many images in the app (like the background in map selection, the maps for selection etc) are taken from screenshots of Cartographers found on Google
