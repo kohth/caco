@@ -5,6 +5,12 @@ A companion app for marking a map and counting scores in the game Cartographers.
 
 CaCo is fanmade and is in no way associated with Thunderworks Games
 
+Introduction
+-----------
+Cartographers is a flip and write game where you aim to place your polyomino (tetris-like) tile placements to maximize points according to drawn goals. I learnt of this game through [Happy Meeple][0] and really enjoyed it. What barred me from purchasing the physical game was that at this point I had been spoilt by the automatic score counting and that there wasn't a need to physically draw maps every time. Cartographers has an app but the app, as far as I know, is self-contained (no need for the physical copy) and also not multiplayer. So I thought, why not make my own app to do this? And here we are. I now also own a physical copy of Cartographers.
+
+[0]: https://www.happymeeple.com/en/
+
 Screenshots
 -----------
 <p float="left">
@@ -29,3 +35,7 @@ Useful Tutorials
 [0]: https://www.geeksforgeeks.org/kivy-tutorial/
 [1]: https://leetcode.com/
 [2]: https://towardsdatascience.com/3-ways-to-convert-python-app-into-apk-77f4c9cd55af
+
+Additional Resources
+--------------------
+Many images displayed in the game are taken from screenshots of Cartographer games
