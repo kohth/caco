@@ -93,8 +93,8 @@ header h1 {
 }
 
 .scorecard-section {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
@@ -109,6 +109,11 @@ header h1 {
     grid-template-columns: repeat(2, 1fr);
     gap: 5px;
     margin-bottom: 10px;
+}
+
+.season-total {
+    grid-column: span 2;
+    text-align: center;
 }
 
 .final-score {
@@ -176,6 +181,7 @@ header h1 {
     }
 
     .scorecard-section {
+        grid-template-columns: 1fr;
         align-items: center;
         width: 100%;
     }
