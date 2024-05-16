@@ -1,54 +1,60 @@
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    background-color: #f8f8f8;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     width: 100%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.header {
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 32px;
+    margin: 0;
+    color: #333;
+}
+
+.goals-section,
+.buttons-section,
+.season-section,
+.grid-section,
+.coins-section,
+.scorecard-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.goals-section select,
+.buttons-section button,
+.season-section select,
+.scorecard-section input {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.buttons-section button {
+    width: 18%;
+    cursor: pointer;
+}
+
+.grid-section {
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.header h1 {
-    font-size: 24px;
-}
-
-.goals,
-.buttons,
-.season-select,
-.grid,
-.circle-slots,
-.scorecard {
-    margin: 10px 0;
-}
-
-.goals {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.goals select {
-    width: 24%;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.buttons button {
-    width: 18%;
-    padding: 10px;
 }
 
 .grid {
@@ -58,11 +64,12 @@ body {
 }
 
 .grid div {
+    width: 40px;
+    height: 40px;
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
     cursor: pointer;
 }
 
@@ -70,6 +77,7 @@ body {
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     gap: 5px;
+    justify-content: center;
 }
 
 .circle-slots div {
@@ -84,27 +92,23 @@ body {
     background-color: yellow;
 }
 
-.scorecard {
+.scorecard-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 
 .season {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
 }
 
 .season-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5px;
-}
-
-.season-total {
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .final-score {
@@ -113,60 +117,55 @@ body {
     align-items: center;
 }
 
+#clear-all {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
-    .goals {
+    .goals-section {
         flex-direction: column;
         align-items: center;
     }
 
-    .goals select {
-        width: 48%;
-        margin-bottom: 10px;
-    }
-
-    .buttons {
+    .buttons-section {
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    .buttons button {
-        width: 30%;
+    .buttons-section button {
+        width: 45%;
         margin-bottom: 10px;
     }
 
     .circle-slots {
         grid-template-columns: repeat(7, 1fr);
     }
-
-    .scorecard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
 }
 
 @media (max-width: 480px) {
-    .header h1 {
-        font-size: 18px;
+    header h1 {
+        font-size: 24px;
     }
 
-    .goals {
+    .goals-section {
         flex-direction: column;
         align-items: center;
     }
 
-    .goals select {
+    .goals-section select {
         width: 100%;
         margin-bottom: 10px;
     }
 
-    .buttons {
+    .buttons-section {
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    .buttons button {
+    .buttons-section button {
         width: 45%;
         margin-bottom: 10px;
     }
@@ -176,9 +175,7 @@ body {
         gap: 5px;
     }
 
-    .scorecard {
-        display: flex;
-        flex-direction: column;
+    .scorecard-section {
         align-items: center;
         width: 100%;
     }
@@ -188,16 +185,7 @@ body {
         gap: 5px;
     }
 
-    .season-total {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-
     .final-score {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 100%;
     }
 }

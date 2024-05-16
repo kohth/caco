@@ -8,43 +8,39 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header>
             <h1>CARTOGRAPHERS</h1>
-        </div>
-        <div class="goals">
-            <select id="goalA">
-                <!-- Options here -->
-            </select>
-            <select id="goalB">
-                <!-- Options here -->
-            </select>
-            <select id="goalC">
-                <!-- Options here -->
-            </select>
-            <select id="goalD">
-                <!-- Options here -->
-            </select>
-        </div>
-        <div class="buttons">
+        </header>
+        <section class="goals-section">
+            <select id="goalA" class="goal-select"></select>
+            <select id="goalB" class="goal-select"></select>
+            <select id="goalC" class="goal-select"></select>
+            <select id="goalD" class="goal-select"></select>
+        </section>
+        <section class="buttons-section">
             <button class="terrain-btn" data-terrain="farm" style="background-color: yellow;">Farm</button>
             <button class="terrain-btn" data-terrain="water" style="background-color: lightblue;">Water</button>
             <button class="terrain-btn" data-terrain="village" style="background-color: red;">Village</button>
             <button class="terrain-btn" data-terrain="forest" style="background-color: green;">Forest</button>
             <button class="terrain-btn" data-terrain="monster" style="background-color: purple;">Monster</button>
-        </div>
-        <div class="season-select">
-            Current Season: 
+        </section>
+        <section class="season-section">
+            <label for="season">Current Season:</label>
             <select id="season">
                 <option value="spring">Spring</option>
                 <option value="summer">Summer</option>
                 <option value="fall">Fall</option>
                 <option value="winter">Winter</option>
             </select>
-        </div>
-        <div class="grid"></div>
-        <div class="circle-slots"></div>
-        <button id="clear-coins">Clear Coins</button>
-        <div class="scorecard">
+        </section>
+        <section class="grid-section">
+            <div class="grid"></div>
+        </section>
+        <section class="coins-section">
+            <div class="circle-slots"></div>
+            <button id="clear-coins">Clear Coins</button>
+        </section>
+        <section class="scorecard-section">
             <div class="season" id="spring">
                 <h3>Spring</h3>
                 <div class="season-grid">
@@ -97,7 +93,7 @@
                 <h3>Final Score</h3>
                 <input type="number" id="final-score" readonly>
             </div>
-        </div>
+        </section>
         <button id="clear-all">Clear All</button>
     </div>
     <script src="script.js"></script>
