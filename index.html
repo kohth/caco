@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartographers Web App</title>
+    <title>Cartographers Scorecard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="goal-selects">
-            <div>
-                <label for="goalA">Goal A: </label>
-                <select id="goalA"></select>
-            </div>
-            <div>
-                <label for="goalB">Goal B: </label>
-                <select id="goalB"></select>
-            </div>
-            <div>
-                <label for="goalC">Goal C: </label>
-                <select id="goalC"></select>
-            </div>
-            <div>
-                <label for="goalD">Goal D: </label>
-                <select id="goalD"></select>
-            </div>
+        <div class="goals">
+            <select id="goalA">
+                <!-- Options here -->
+            </select>
+            <select id="goalB">
+                <!-- Options here -->
+            </select>
+            <select id="goalC">
+                <!-- Options here -->
+            </select>
+            <select id="goalD">
+                <!-- Options here -->
+            </select>
         </div>
-        <div class="icons-top">
+        <div class="buttons">
             <button class="terrain-btn" data-terrain="farm" style="background-color: yellow;">Farm</button>
             <button class="terrain-btn" data-terrain="water" style="background-color: lightblue;">Water</button>
             <button class="terrain-btn" data-terrain="village" style="background-color: red;">Village</button>
@@ -34,7 +30,7 @@
             <button class="terrain-btn" data-terrain="monster" style="background-color: purple;">Monster</button>
         </div>
         <div class="season-select">
-            <label for="season">Current Season: </label>
+            Current Season: 
             <select id="season">
                 <option value="spring">Spring</option>
                 <option value="summer">Summer</option>
@@ -42,66 +38,62 @@
                 <option value="winter">Winter</option>
             </select>
         </div>
-        <div class="grid">
-            <!-- Generate grid dynamically with JavaScript -->
-        </div>
-        <div class="circle-slots">
-            <!-- Add circular slots here -->
-        </div>
+        <div class="grid"></div>
+        <div class="circle-slots"></div>
         <button id="clear-coins">Clear Coins</button>
-        <div class="seasons">
+        <div class="scorecard">
             <div class="season" id="spring">
                 <h3>Spring</h3>
                 <div class="season-grid">
-                    <input type="number" class="goal" id="spring-goal1" placeholder="Goal 1" readonly>
-                    <input type="number" class="goal" id="spring-goal2" placeholder="Goal 2" readonly>
-                    <input type="number" id="spring-coins" placeholder="Coins">
-                    <input type="number" id="spring-monsters" placeholder="Monsters">
+                    <input type="number" id="spring-goal1" class="goal">
+                    <input type="number" id="spring-goal2" class="goal">
+                    <input type="number" id="spring-coins">
+                    <input type="number" id="spring-monsters">
                 </div>
                 <div class="season-total">
-                    <input type="number" id="spring-total" placeholder="Total Score" readonly>
+                    <input type="number" id="spring-total" readonly>
                 </div>
             </div>
             <div class="season" id="summer">
                 <h3>Summer</h3>
                 <div class="season-grid">
-                    <input type="number" class="goal" id="summer-goal1" placeholder="Goal 1" readonly>
-                    <input type="number" class="goal" id="summer-goal2" placeholder="Goal 2" readonly>
-                    <input type="number" id="summer-coins" placeholder="Coins">
-                    <input type="number" id="summer-monsters" placeholder="Monsters">
+                    <input type="number" id="summer-goal1" class="goal">
+                    <input type="number" id="summer-goal2" class="goal">
+                    <input type="number" id="summer-coins">
+                    <input type="number" id="summer-monsters">
                 </div>
                 <div class="season-total">
-                    <input type="number" id="summer-total" placeholder="Total Score" readonly>
+                    <input type="number" id="summer-total" readonly>
                 </div>
             </div>
             <div class="season" id="fall">
                 <h3>Fall</h3>
                 <div class="season-grid">
-                    <input type="number" class="goal" id="fall-goal1" placeholder="Goal 1" readonly>
-                    <input type="number" class="goal" id="fall-goal2" placeholder="Goal 2" readonly>
-                    <input type="number" id="fall-coins" placeholder="Coins">
-                    <input type="number" id="fall-monsters" placeholder="Monsters">
+                    <input type="number" id="fall-goal1" class="goal">
+                    <input type="number" id="fall-goal2" class="goal">
+                    <input type="number" id="fall-coins">
+                    <input type="number" id="fall-monsters">
                 </div>
                 <div class="season-total">
-                    <input type="number" id="fall-total" placeholder="Total Score" readonly>
+                    <input type="number" id="fall-total" readonly>
                 </div>
             </div>
             <div class="season" id="winter">
                 <h3>Winter</h3>
                 <div class="season-grid">
-                    <input type="number" class="goal" id="winter-goal1" placeholder="Goal 1" readonly>
-                    <input type="number" class="goal" id="winter-goal2" placeholder="Goal 2" readonly>
-                    <input type="number" id="winter-coins" placeholder="Coins">
-                    <input type="number" id="winter-monsters" placeholder="Monsters">
+                    <input type="number" id="winter-goal1" class="goal">
+                    <input type="number" id="winter-goal2" class="goal">
+                    <input type="number" id="winter-coins">
+                    <input type="number" id="winter-monsters">
                 </div>
                 <div class="season-total">
-                    <input type="number" id="winter-total" placeholder="Total Score" readonly>
+                    <input type="number" id="winter-total" readonly>
                 </div>
             </div>
-        </div>
-        <div class="final">
-            <h3>Final</h3>
-            <input type="number" id="final-score" placeholder="Final Score" readonly>
+            <div class="final-score">
+                <h3>Final Score</h3>
+                <input type="number" id="final-score" readonly>
+            </div>
         </div>
         <button id="clear-all">Clear All</button>
     </div>

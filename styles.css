@@ -1,80 +1,72 @@
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
 }
 
-.goal-selects, .icons-top {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    flex-wrap: nowrap;
+.goals,
+.buttons,
+.season-select,
+.grid,
+.circle-slots,
+.scorecard {
     margin: 10px 0;
 }
 
-.goal-selects div, .goal-selects label, .goal-selects select,
-.icons-top button {
-    margin: 5px;
-    font-size: 1.2em;
-    flex: 1;
+.goals {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.season-select {
-    margin: 10px;
-    font-size: 1.2em;
+.goals select {
+    width: 24%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons button {
+    width: 18%;
+    padding: 10px;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(11, 1fr);
-    grid-template-rows: repeat(11, 1fr);
-    gap: 5px;
-    margin: 20px 0;
-    width: 100%;
-    max-width: 600px;
+    gap: 2px;
 }
 
 .grid div {
-    width: 100%;
-    padding-top: 100%; /* Maintain square aspect ratio */
     border: 1px solid #ccc;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    padding: 20px 0;
     cursor: pointer;
-    position: relative;
-}
-
-.grid div span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .circle-slots {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 5px;
 }
 
 .circle-slots div {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #ccc;
     border-radius: 50%;
-    margin: 5px;
     cursor: pointer;
 }
 
@@ -82,68 +74,73 @@ body {
     background-color: yellow;
 }
 
-#clear-coins, #clear-all {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #ffcccc;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2em;
-}
-
-.seasons {
+.scorecard {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 20px 0;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .season {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 10px;
-    width: 45%;
-    min-width: 300px;
+    gap: 5px;
 }
 
 .season-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     gap: 5px;
 }
 
 .season-total {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px 0;
+    justify-content: space-between;
 }
 
-.season-grid input, .season-total input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    text-align: center;
-    font-size: 1.2em;
-}
-
-.final {
+.final-score {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0;
 }
 
-.final input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-    text-align: center;
-    font-size: 1.2em;
+/* Responsive styles */
+@media (max-width: 768px) {
+    .goals select {
+        width: 48%;
+        margin-bottom: 10px;
+    }
+
+    .buttons button {
+        width: 18%;
+    }
+
+    .circle-slots {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .scorecard {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .buttons {
+        flex-wrap: wrap;
+    }
+
+    .buttons button {
+        width: 30%;
+        margin-bottom: 10px;
+    }
+
+    .circle-slots {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+
+    .goals select {
+        width: 48%;
+        margin-bottom: 10px;
+    }
 }
