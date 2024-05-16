@@ -12,6 +12,16 @@ body {
     width: 100%;
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 24px;
+}
+
 .goals,
 .buttons,
 .season-select,
@@ -105,28 +115,19 @@ body {
 
 /* Responsive styles */
 @media (max-width: 768px) {
+    .goals {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .goals select {
         width: 48%;
         margin-bottom: 10px;
     }
 
-    .buttons button {
-        width: 18%;
-    }
-
-    .circle-slots {
-        grid-template-columns: repeat(7, 1fr);
-    }
-
-    .scorecard {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
     .buttons {
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .buttons button {
@@ -136,11 +137,67 @@ body {
 
     .circle-slots {
         grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
+    }
+
+    .scorecard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .goals {
+        flex-direction: column;
+        align-items: center;
     }
 
     .goals select {
-        width: 48%;
+        width: 100%;
         margin-bottom: 10px;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .buttons button {
+        width: 45%;
+        margin-bottom: 10px;
+    }
+
+    .circle-slots {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+
+    .scorecard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .season-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .season-total {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .final-score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 }

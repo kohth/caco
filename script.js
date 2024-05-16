@@ -341,9 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scoreLostBarony() {
-        const largestSquare = getLargestSquareOfFilledSpaces();
-        const sideLength = largestSquare.length ? largestSquare[0][2] - largestSquare[0][0] + 1 : 0;
-        return sideLength === 2 ? 6 : sideLength === 3 ? 9 : 0;
+        const filledSpaces = getLargestSquareOfFilledSpaces();
+        return filledSpaces.length * 3;
     }
 
     function scoreBorderlands() {
