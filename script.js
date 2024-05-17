@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             cell.appendChild(span);
             if (i > 0 && j > 0) {
+                // Add ruin tiles
+                if ((i === 3 && j === 2) || (i === 2 && j === 6) || (i === 3 && j === 10) ||
+                    (i === 9 && j === 2) || (i === 10 && j === 6) || (i === 10 && j === 10)) {
+                    cell.classList.add('ruin');
+                }
                 cell.addEventListener('click', () => {
                     if (cell.dataset.terrain) {
                         cell.removeAttribute('data-terrain');
