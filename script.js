@@ -42,18 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             cell.appendChild(span);
             if (i > 0 && j > 0) {
-                // Add ruin tiles
+                // Add mountain and ruin tiles
                 if ((i === 3 && j === 2) || (i === 2 && j === 6) || (i === 3 && j === 10) ||
                     (i === 9 && j === 2) || (i === 10 && j === 6) || (i === 10 && j === 10)) {
                     cell.classList.add('ruin');
                 }
+                if ((i === 2 && j === 4) || (i === 3 && j === 9) || (i === 9 && j === 3) ||
+                    (i === 10 && j === 8) || (i === 6 && j === 6)) {
+                    cell.classList.add('mountain');
+                    cell.style.backgroundImage = "url('mountain.svg')";
+                }
                 cell.addEventListener('click', () => {
-                    if (cell.dataset.terrain) {
-                        cell.removeAttribute('data-terrain');
-                        cell.style.backgroundColor = '';
-                    } else if (selectedTerrain) {
-                        cell.dataset.terrain = selectedTerrain;
-                        cell.style.backgroundColor = getTerrainColor(selectedTerrain);
+                    if (!cell.classList.contains('mountain')) {
+                        if (cell.dataset.terrain) {
+                            cell.removeAttribute('data-terrain');
+                            cell.style.backgroundColor = '';
+                        } else if (selectedTerrain) {
+                            cell.dataset.terrain = selectedTerrain;
+                            cell.style.backgroundColor = getTerrainColor(selectedTerrain);
+                        }
                     }
                     updateGoals();
                     updateMonsters();
@@ -384,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function scoreTheBrokenRoad() {
         let score = 0;
         for (let i = 1; i < 12; i++) { // Adjusted to 12
-            for (let j = 1; j < 12; j++) { // Adjusted to 12
+            for (let j = 1; j < i; j++) { // Adjusted to 12
                 if (isDiagonalLineOfFilledSpaces(i, j)) {
                     score += 3;
                 }
@@ -446,8 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isAdjacentTo(x, y, terrain) {
         const adjacents = getAdjacentCells(x, y);
-        if (terrain === 'ruin') {
-            return adjacents.some(cell => cell.classList.contains('ruin'));
+        if (terrain === 'ruin' || terrain === 'mountain' ) {
+            return adjacents.some(cell => cell.classList.contains(terrain));
         }
         return adjacents.some(cell => cell.dataset.terrain === terrain);
     }

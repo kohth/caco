@@ -1,4 +1,4 @@
-/* Base styles */
+/* General styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,15 +6,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f8f8;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
 
 .container {
+    width: 90%;
     max-width: 1000px;
-    width: 100%;
+    background-color: #fff;
     padding: 20px;
-    background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 header {
@@ -23,179 +25,169 @@ header {
 }
 
 header h1 {
-    font-size: 32px;
+    font-size: 24px;
     margin: 0;
-    color: #333;
 }
 
-.goals-section,
-.buttons-section,
-.season-section,
-.grid-section,
-.coins-section,
-.scorecard-section {
-    margin-bottom: 20px;
-    text-align: center;
+/* Goal and button sections */
+.goals-section, .buttons-section, .season-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
 }
 
-.goals-section select,
-.buttons-section button,
-.season-section select,
-.scorecard-section input {
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
+.goals-section select, .buttons-section button {
+    width: 22%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
-.buttons-section button {
-    width: 18%;
+.terrain-btn {
     cursor: pointer;
+    color: #fff;
 }
 
+.terrain-btn.selected {
+    outline: 2px solid #000;
+}
+
+/* Grid section */
 .grid-section {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    gap: 0;
+    width: 100%;
+    max-width: 500px;
 }
 
 .grid div {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    border: 1px solid #ccc;
+    aspect-ratio: 1;
+    background-size: contain;
 }
 
-.grid div.ruin {
+.grid div span {
+    display: none;
+}
+
+.grid div[data-terrain] {
+    color: #fff;
+}
+
+.grid .ruin {
     background-image: url('ruins.svg');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.grid .mountain {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Coins section */
+.coins-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .circle-slots {
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    gap: 5px;
-    justify-content: center;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;
 }
 
 .circle-slots div {
-    width: 25px;
-    height: 25px;
-    border: 2px solid #ccc;
+    width: 100%;
+    padding-bottom: 100%;
     border-radius: 50%;
+    border: 2px solid #ccc;
     cursor: pointer;
+    background-color: #fff;
 }
 
-.circle-slots .filled {
+.circle-slots div.filled {
     background-color: yellow;
 }
 
+/* Scorecard section */
 .scorecard-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.season {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
+}
+
+.seasons-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.season, .final-score {
+    flex: 1;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.season h3, .final-score h3 {
+    margin: 5px 0;
+    font-size: 18px;
 }
 
 .season-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 5px;
-    margin-bottom: 10px;
 }
 
-.season-total {
-    grid-column: span 2;
+.season-grid input, .season-total input, .final-score input {
+    width: 100%;
+    padding: 5px;
     text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
-.final-score {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.season-total input {
+    grid-column: span 2;
 }
 
-#clear-all {
-    padding: 10px 20px;
-    font-size: 16px;
+/* Clear buttons */
+#clear-coins, #clear-all {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffcccc;
     cursor: pointer;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .goals-section {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .buttons-section {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .buttons-section button {
-        width: 45%;
-        margin-bottom: 10px;
-    }
-
-    .circle-slots {
-        grid-template-columns: repeat(7, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 24px;
-    }
-
-    .goals-section {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .goals-section select {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .buttons-section {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .buttons-section button {
-        width: 45%;
-        margin-bottom: 10px;
-    }
-
-    .circle-slots {
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-    }
-
-    .scorecard-section {
-        grid-template-columns: 1fr;
-        align-items: center;
-        width: 100%;
-    }
-
-    .season-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-    }
-
-    .final-score {
-        width: 100%;
-    }
+#clear-all {
+    background-color: #ff9999;
 }
