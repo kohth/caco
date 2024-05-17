@@ -65,8 +65,8 @@ header h1 {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, 1fr);
     gap: 0;
     width: 100%;
     max-width: 500px;
@@ -194,4 +194,27 @@ header h1 {
 
 #clear-all {
     background-color: #ff9999;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .goals-section, .buttons-section, .season-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .goals-section select, .buttons-section button {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(11, 1fr);
+        grid-template-rows: repeat(11, 1fr);
+    }
+
+    .circle-slots {
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
 }
