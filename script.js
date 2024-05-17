@@ -5,140 +5,154 @@ document.addEventListener('DOMContentLoaded', () => {
         'Wildholds', 'Great City', 'Shieldgate', 'Greengold Plains'
     ];
 
-    // Populate goal dropdowns
     const goalDropdowns = ['goalA', 'goalB', 'goalC', 'goalD'];
-    goalDropdowns.forEach(dropdown => {
-        const select = document.getElementById(dropdown);
-        goals.forEach(goal => {
-            const option = document.createElement('option');
-            option.value = goal;
-            option.innerText = goal;
-            select.appendChild(option);
-        });
-    });
-
-    let selectedTerrain = null;
+    const terrainColors = {
+        'farm': 'yellow',
+        'water': 'lightblue',
+        'village': 'red',
+        'forest': 'green',
+        'monster': 'purple'
+    };
 
     const grid = document.querySelector('.grid');
     const seasonSelect = document.getElementById('season');
+    const circleSlots = document.querySelector('.circle-slots');
+    let selectedTerrain = null;
     let currentSeason = seasonSelect.value;
 
-    seasonSelect.addEventListener('change', () => {
-        currentSeason = seasonSelect.value;
+    initDropdowns();
+    initGrid();
+    initCircleSlots();
+    initListeners();
+    updateAll();
+
+    function initDropdowns() {
+        goalDropdowns.forEach(dropdownId => {
+            const select = document.getElementById(dropdownId);
+            goals.forEach(goal => {
+                const option = document.createElement('option');
+                option.value = goal;
+                option.innerText = goal;
+                select.appendChild(option);
+            });
+        });
+    }
+
+    function initGrid() {
+        for (let i = 0; i < 11; i++) {
+            for (let j = 0; j < 11; j++) {
+                const cell = document.createElement('div');
+                addSpecialTiles(cell, i, j);
+                cell.addEventListener('click', () => handleCellClick(cell));
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function addSpecialTiles(cell, i, j) {
+        if (isRuinTile(i, j)) {
+            cell.classList.add('ruin');
+        }
+        if (isMountainTile(i, j)) {
+            cell.classList.add('mountain');
+            cell.style.backgroundImage = "url('mountain.svg')";
+        }
+    }
+
+    function isRuinTile(i, j) {
+        const ruins = [[2, 1], [1, 5], [2, 9], [8, 1], [9, 5], [8, 9]];
+        return ruins.some(coord => coord[0] === i && coord[1] === j);
+    }
+
+    function isMountainTile(i, j) {
+        const mountains = [[1, 3], [2, 8], [8, 2], [9, 7], [5, 5]];
+        return mountains.some(coord => coord[0] === i && coord[1] === j);
+    }
+
+    function handleCellClick(cell) {
+        if (!cell.classList.contains('mountain')) {
+            if (cell.dataset.terrain) {
+                cell.removeAttribute('data-terrain');
+                cell.style.backgroundColor = '';
+            } else if (selectedTerrain) {
+                cell.dataset.terrain = selectedTerrain;
+                cell.style.backgroundColor = terrainColors[selectedTerrain] || '';
+            }
+        }
+        updateAll();
+    }
+
+    function initCircleSlots() {
+        for (let i = 0; i < 14; i++) {
+            const circle = document.createElement('div');
+            circle.addEventListener('click', () => {
+                circle.classList.toggle('filled');
+                updateAll();
+            });
+            circleSlots.appendChild(circle);
+        }
+    }
+
+    function initListeners() {
+        seasonSelect.addEventListener('change', () => {
+            currentSeason = seasonSelect.value;
+            updateAll();
+        });
+
+        document.querySelectorAll('.terrain-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedTerrain = btn.dataset.terrain;
+                document.querySelectorAll('.terrain-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+
+        document.getElementById('clear-coins').addEventListener('click', () => {
+            document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
+            updateAll();
+        });
+
+        document.getElementById('clear-all').addEventListener('click', () => {
+            document.querySelectorAll('.grid div').forEach(cell => {
+                cell.removeAttribute('data-terrain');
+                cell.style.backgroundColor = '';
+            });
+            document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
+            document.querySelectorAll('.season-grid input, .season-total input, .final-score input').forEach(input => input.value = '');
+        });
+
+        document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
+            dropdown.addEventListener('change', () => {
+                updateGoals();
+                updateAll();
+            });
+        });
+    }
+
+    function updateAll() {
         updateCoins();
         updateMonsters();
         updateGoals();
         updateSeasonTotal();
         updateFinalScore();
-    });
-
-    // Create grid cells
-    for (let i = 0; i < 11; i++) { // Adjusted to 11
-        for (let j = 0; j < 11; j++) { // Adjusted to 11
-            const cell = document.createElement('div');
-            // Add mountain and ruin tiles
-            if ((i === 2 && j === 3) || (i === 1 && j === 5) || (i === 2 && j === 9) ||
-                (i === 8 && j === 2) || (i === 9 && j === 5) || (i === 9 && j === 9)) {
-                cell.classList.add('ruin');
-            }
-            if ((i === 1 && j === 3) || (i === 2 && j === 8) || (i === 8 && j === 3) ||
-                (i === 9 && j === 7) || (i === 5 && j === 5)) {
-                cell.classList.add('mountain');
-                cell.style.backgroundImage = "url('mountain.svg')";
-            }
-            cell.addEventListener('click', () => {
-                if (!cell.classList.contains('mountain')) {
-                    if (cell.dataset.terrain) {
-                        cell.removeAttribute('data-terrain');
-                        cell.style.backgroundColor = '';
-                    } else if (selectedTerrain) {
-                        cell.dataset.terrain = selectedTerrain;
-                        cell.style.backgroundColor = getTerrainColor(selectedTerrain);
-                    }
-                }
-                updateGoals();
-                updateMonsters();
-                updateSeasonTotal();
-                updateFinalScore();
-            });
-            grid.appendChild(cell);
-        }
     }
 
-    // Handle terrain selection
-    document.querySelectorAll('.terrain-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            selectedTerrain = btn.dataset.terrain;
-            document.querySelectorAll('.terrain-btn').forEach(btn => btn.classList.remove('selected'));
-            btn.classList.add('selected');
-        });
-    });
-
-    // Create circular slots
-    const circleSlots = document.querySelector('.circle-slots');
-    for (let i = 0; i < 14; i++) {
-        const circle = document.createElement('div');
-        circle.addEventListener('click', () => {
-            circle.classList.toggle('filled');
-            updateCoins();
-            updateGoals();
-            updateSeasonTotal();
-            updateFinalScore();
-        });
-        circleSlots.appendChild(circle);
-    }
-
-    // Clear all coins
-    document.getElementById('clear-coins').addEventListener('click', () => {
-        document.querySelectorAll('.circle-slots .filled').forEach(circle => {
-            circle.classList.remove('filled');
-        });
-        updateCoins();
-        updateGoals();
-        updateSeasonTotal();
-        updateFinalScore();
-    });
-
-    // Clear all inputs
-    document.getElementById('clear-all').addEventListener('click', () => {
-        document.querySelectorAll('.grid div').forEach(cell => {
-            cell.removeAttribute('data-terrain');
-            cell.style.backgroundColor = '';
-        });
-        document.querySelectorAll('.circle-slots .filled').forEach(circle => {
-            circle.classList.remove('filled');
-        });
-        document.querySelectorAll('.season-grid input').forEach(input => {
-            input.value = '';
-        });
-        document.querySelectorAll('.season-total input').forEach(input => {
-            input.value = '';
-        });
-        document.getElementById('final-score').value = '';
-    });
-
-    // Update coins for selected season
     function updateCoins() {
         const filledCoins = document.querySelectorAll('.circle-slots .filled').length;
         document.getElementById(`${currentSeason}-coins`).value = filledCoins;
     }
 
-    // Update monster score for selected season
     function updateMonsters() {
         let monsterCount = 0;
         const countedCells = new Set();
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'monster') {
-                    monsterCount += countAdjacentEmptyCells(i, j, countedCells);
-                }
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'monster') {
+                monsterCount += countAdjacentEmptyCells(i, j, countedCells);
             }
-        }
+        });
         document.getElementById(`${currentSeason}-monsters`).value = -monsterCount;
     }
 
-    // Count empty cells adjacent to a given cell
     function countAdjacentEmptyCells(i, j, countedCells) {
         let count = 0;
         const adjacentCoords = [
@@ -146,9 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
             [i, j - 1], [i, j + 1]
         ];
         adjacentCoords.forEach(([x, y]) => {
-            if (x >= 0 && x < 11 && y >= 0 && y < 11) { // Adjusted to 11
-                const adjacentCell = grid.children[x * 11 + y]; // Adjusted to 11
-                const cellIndex = x * 11 + y; // Adjusted to 11
+            if (isValidCoord(x, y)) {
+                const adjacentCell = grid.children[x * 11 + y];
+                const cellIndex = x * 11 + y;
                 if (!adjacentCell.dataset.terrain && !countedCells.has(cellIndex)) {
                     count++;
                     countedCells.add(cellIndex);
@@ -158,7 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return count;
     }
 
-    // Update total score for selected season
+    function isValidCoord(x, y) {
+        return x >= 0 && x < 11 && y >= 0 && y < 11;
+    }
+
     function updateSeasonTotal() {
         const goal1 = parseInt(document.getElementById(`${currentSeason}-goal1`).value) || 0;
         const goal2 = parseInt(document.getElementById(`${currentSeason}-goal2`).value) || 0;
@@ -168,24 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(`${currentSeason}-total`).value = total;
     }
 
-    // Update final score
     function updateFinalScore() {
         let finalScore = 0;
-        const seasons = ['spring', 'summer', 'fall', 'winter'];
-        seasons.forEach(season => {
+        ['spring', 'summer', 'fall', 'winter'].forEach(season => {
             finalScore += parseInt(document.getElementById(`${season}-total`).value) || 0;
         });
         document.getElementById('final-score').value = finalScore;
     }
 
-    // Update season goals based on selected goals
-    function updateSeasonGoals() {
-        updateGoals();
-    }
-
-    // Update goal scores based on the grid content
     function updateGoals() {
-        const goals = {
+        const goalsMap = {
             'The Golden Granary': scoreTheGoldenGranary,
             'Canal Lake': scoreCanalLake,
             'Shoreside Expanse': scoreShoresideExpanse,
@@ -204,56 +213,98 @@ document.addEventListener('DOMContentLoaded', () => {
             'Greengold Plains': scoreGreengoldPlains
         };
 
-        const goalA = document.getElementById('goalA').value;
-        const goalB = document.getElementById('goalB').value;
-        const goalC = document.getElementById('goalC').value;
-        const goalD = document.getElementById('goalD').value;
+        const goalsForSeason = {
+            'spring': [document.getElementById('goalA').value, document.getElementById('goalB').value],
+            'summer': [document.getElementById('goalB').value, document.getElementById('goalC').value],
+            'fall': [document.getElementById('goalC').value, document.getElementById('goalD').value],
+            'winter': [document.getElementById('goalD').value, document.getElementById('goalA').value]
+        };
 
-        document.getElementById('spring-goal1').dataset.goal = goalA;
-        document.getElementById('spring-goal2').dataset.goal = goalB;
-        document.getElementById('summer-goal1').dataset.goal = goalB;
-        document.getElementById('summer-goal2').dataset.goal = goalC;
-        document.getElementById('fall-goal1').dataset.goal = goalC;
-        document.getElementById('fall-goal2').dataset.goal = goalD;
-        document.getElementById('winter-goal1').dataset.goal = goalD;
-        document.getElementById('winter-goal2').dataset.goal = goalA;
-
-        document.querySelectorAll('.goal').forEach(goalInput => {
-            if (goalInput.id.startsWith(currentSeason)) {
-                const goal = goalInput.dataset.goal;
-                goalInput.value = goals[goal]();
-            }
+        ['spring', 'summer', 'fall', 'winter'].forEach(season => {
+            const [goal1, goal2] = goalsForSeason[season];
+            document.getElementById(`${season}-goal1`).value = goalsMap[goal1]();
+            document.getElementById(`${season}-goal2`).value = goalsMap[goal2]();
         });
     }
 
-    // Scoring functions for each goal
-    function scoreTheGoldenGranary() {
-        let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'ruin')) {
-                    score++;
-                } else if (cell.dataset.terrain === 'farm' && cell.classList.contains('ruin')) {
-                    score += 3;
-                }
+    function iterateGrid(callback) {
+        for (let i = 0; i < 11; i++) {
+            for (let j = 0; j < 11; j++) {
+                const cell = grid.children[i * 11 + j];
+                callback(i, j, cell);
             }
         }
+    }
+
+    function getClusters(terrain) {
+        const visited = new Set();
+        const clusters = [];
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === terrain && !visited.has(i * 11 + j)) {
+                const cluster = [];
+                const stack = [[i, j]];
+                while (stack.length) {
+                    const [x, y] = stack.pop();
+                    const cellIndex = x * 11 + y;
+                    if (!visited.has(cellIndex)) {
+                        visited.add(cellIndex);
+                        cluster.push([x, y]);
+                        getAdjacentCells(x, y).forEach(adj => {
+                            if (adj.dataset.terrain === terrain && !visited.has(adj.dataset.index)) {
+                                stack.push([parseInt(adj.dataset.row), parseInt(adj.dataset.col)]);
+                            }
+                        });
+                    }
+                }
+                clusters.push(cluster);
+            }
+        });
+        return clusters;
+    }
+
+    function getAdjacentCells(x, y) {
+        const adjacents = [];
+        const coords = [
+            [x - 1, y], [x + 1, y],
+            [x, y - 1], [x, y + 1]
+        ];
+        coords.forEach(([i, j]) => {
+            if (isValidCoord(i, j)) {
+                adjacents.push(grid.children[i * 11 + j]);
+            }
+        });
+        return adjacents;
+    }
+
+    function isClusterTouchingEdge(cluster) {
+        return cluster.some(([x, y]) => x === 0 || x === 10 || y === 0 || y === 10);
+    }
+
+    function isClusterAdjacentTo(cluster, terrain) {
+        return cluster.some(([x, y]) => getAdjacentCells(x, y).some(adj => adj.dataset.terrain === terrain));
+    }
+
+    function scoreTheGoldenGranary() {
+        let score = 0;
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'ruin')) {
+                score++;
+            } else if (cell.dataset.terrain === 'farm' && cell.classList.contains('ruin')) {
+                score += 3;
+            }
+        });
         return score;
     }
 
     function scoreCanalLake() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'farm')) {
-                    score++;
-                } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'water')) {
-                    score++;
-                }
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'farm')) {
+                score++;
+            } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'water')) {
+                score++;
             }
-        }
+        });
         return score;
     }
 
@@ -276,42 +327,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreMagesValley() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'mountain')) {
-                    score += 2;
-                } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'mountain')) {
-                    score++;
-                }
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'mountain')) {
+                score += 2;
+            } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'mountain')) {
+                score++;
             }
-        }
+        });
         return score;
     }
 
     function scoreSentinelWood() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'forest' && (i === 0 || i === 10 || j === 0 || j === 10)) {
-                    score++;
-                }
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'forest' && (i === 0 || i === 10 || j === 0 || j === 10)) {
+                score++;
             }
-        }
+        });
         return score;
     }
 
     function scoreTreetower() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                const cell = grid.children[i * 11 + j]; // Adjusted to 11
-                if (cell.dataset.terrain === 'forest' && isSurrounded(i, j)) {
-                    score++;
-                }
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'forest' && isSurrounded(i, j)) {
+                score++;
             }
-        }
+        });
         return score;
     }
 
@@ -328,10 +370,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreGreenbough() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
+        for (let i = 0; i < 11; i++) {
             let rowHasForest = false;
             let colHasForest = false;
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
+            for (let j = 0; j < 11; j++) {
                 if (grid.children[i * 11 + j].dataset.terrain === 'forest') {
                     rowHasForest = true;
                 }
@@ -347,15 +389,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreLostBarony() {
         const filledSpaces = getLargestSquareOfFilledSpaces();
-        return Math.sqrt(filledSpaces.length) * 3; // Changed to square root of length
+        return Math.sqrt(filledSpaces.length) * 3;
     }
 
     function scoreBorderlands() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
+        for (let i = 0; i < 11; i++) {
             let rowFilled = true;
             let colFilled = true;
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
+            for (let j = 0; j < 11; j++) {
                 if (!grid.children[i * 11 + j].dataset.terrain) {
                     rowFilled = false;
                 }
@@ -371,25 +413,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreTheCauldrons() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                if (!grid.children[i * 11 + j].dataset.terrain && isSurrounded(i, j)) {
-                    score++;
-                }
+        iterateGrid((i, j, cell) => {
+            if (!cell.dataset.terrain && isSurrounded(i, j)) {
+                score++;
             }
-        }
+        });
         return score;
     }
 
     function scoreTheBrokenRoad() {
         let score = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                if (isDiagonalLineOfFilledSpaces(i, j)) {
-                    score += 3;
-                }
+        iterateGrid((i, j) => {
+            if (isDiagonalLineOfFilledSpaces(i, j)) {
+                score += 3;
             }
-        }
+        });
         return score;
     }
 
@@ -430,8 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
         villageClusters.forEach(cluster => {
             const terrainTypes = new Set();
             cluster.forEach(([x, y]) => {
-                const adjacents = getAdjacentCells(x, y);
-                adjacents.forEach(adj => {
+                getAdjacentCells(x, y).forEach(adj => {
                     if (adj.dataset.terrain && adj.dataset.terrain !== 'village') {
                         terrainTypes.add(adj.dataset.terrain);
                     }
@@ -444,81 +481,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return score;
     }
 
-    function isAdjacentTo(x, y, terrain) {
-        const adjacents = getAdjacentCells(x, y);
-        if (terrain === 'ruin' || terrain === 'mountain' ) {
-            return adjacents.some(cell => cell.classList.contains(terrain));
-        }
-        return adjacents.some(cell => cell.dataset.terrain === terrain);
-    }
-
-    function getAdjacentCells(x, y) {
-        const adjacents = [];
-        const coords = [
-            [x - 1, y], [x + 1, y],
-            [x, y - 1], [x, y + 1]
-        ];
-        coords.forEach(([i, j]) => {
-            if (i >= 0 && i < 11 && j >= 0 && j < 11) { // Adjusted to 11
-                adjacents.push(grid.children[i * 11 + j]); // Adjusted to 11
-            }
-        });
-        return adjacents;
-    }
-
-    function isSurrounded(x, y) {
-        const adjacents = getAdjacentCells(x, y);
-        return adjacents.every(cell => cell.dataset.terrain);
-    }
-
-    function getClusters(terrain) {
-        const visited = new Set();
-        const clusters = [];
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                if (grid.children[i * 11 + j].dataset.terrain === terrain && !visited.has(i * 11 + j)) { // Adjusted to 11
-                    const cluster = [];
-                    const stack = [[i, j]];
-                    while (stack.length) {
-                        const [x, y] = stack.pop();
-                        const cellIndex = x * 11 + y; // Adjusted to 11
-                        if (!visited.has(cellIndex)) {
-                            visited.add(cellIndex);
-                            cluster.push([x, y]);
-                            const adjacents = getAdjacentCells(x, y);
-                            adjacents.forEach(adj => {
-                                if (adj.dataset.terrain === terrain && !visited.has(adj.dataset.index)) {
-                                    stack.push([parseInt(adj.dataset.row), parseInt(adj.dataset.col)]);
-                                }
-                            });
-                        }
-                    }
-                    clusters.push(cluster);
-                }
-            }
-        }
-        return clusters;
-    }
-
-    function isClusterAdjacentTo(cluster, terrain) {
-        return cluster.some(([x, y]) => isAdjacentTo(x, y, terrain));
-    }
-
-    function isClusterTouchingEdge(cluster) {
-        return cluster.some(([x, y]) => x === 0 || x === 10 || y === 0 || y === 10); // Adjusted to 11
-    }
-
-    function isClusterConnectedBy(cluster, terrain) {
-        return cluster.every(([x, y]) => isAdjacentTo(x, y, terrain));
-    }
-
     function getLargestSquareOfFilledSpaces() {
-        const dp = Array(11).fill().map(() => Array(11).fill(0)); // Adjusted to 11
+        const dp = Array(11).fill().map(() => Array(11).fill(0));
         let maxSquare = 0;
-        for (let i = 0; i < 11; i++) { // Adjusted to 11
-            for (let j = 0; j < 11; j++) { // Adjusted to 11
-                if (grid.children[i * 11 + j].dataset.terrain) { // Adjusted to 11
-                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+        for (let i = 0; i < 11; i++) {
+            for (let j = 0; j < 11; j++) {
+                if (grid.children[i * 11 + j].dataset.terrain) {
+                    dp[i][j] = Math.min(dp[i - 1]?.[j] || 0, dp[i][j - 1] || 0, dp[i - 1]?.[j - 1] || 0) + 1;
                     maxSquare = Math.max(maxSquare, dp[i][j]);
                 }
             }
@@ -532,42 +501,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return filledSpaces;
     }
 
+    function isSurrounded(x, y) {
+        return getAdjacentCells(x, y).every(cell => cell.dataset.terrain);
+    }
+
     function isDiagonalLineOfFilledSpaces(x, y) {
-        return x === y || x + y === 10; // Adjusted to 11
+        return x === y || x + y === 10;
     }
 
-    function getTerrainColor(terrain) {
-        switch (terrain) {
-            case 'farm':
-                return 'yellow';
-            case 'village':
-                return 'red';
-            case 'water':
-                return 'lightblue';
-            case 'monster':
-                return 'purple';
-            case 'forest':
-                return 'green';
-            default:
-                return '';
+    function isAdjacentTo(x, y, terrain) {
+        const adjacents = getAdjacentCells(x, y);
+        if (terrain === 'ruin' || terrain === 'mountain' ) {
+            return adjacents.some(cell => cell.classList.contains(terrain));
         }
+        return adjacents.some(cell => cell.dataset.terrain === terrain);
     }
 
-    // Initialize the page by updating goals and scores for the default season (spring)
-    updateSeasonGoals();
-    updateCoins();
-    updateMonsters();
-    updateGoals();
-    updateSeasonTotal();
-    updateFinalScore();
-
-    // Listen for changes in goal dropdowns and update goals accordingly
-    document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
-        dropdown.addEventListener('change', () => {
-            updateSeasonGoals();
-            updateGoals();
-            updateSeasonTotal();
-            updateFinalScore();
-        });
-    });
+    function isClusterConnectedBy(cluster, terrain) {
+        return cluster.every(([x, y]) => isAdjacentTo(x, y, terrain));
+    }
 });

@@ -36,7 +36,7 @@ header h1 {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
-    flex-wrap: wrap;
+/*    flex-wrap: wrap;*/
 }
 
 .goals-section select, .buttons-section button {
