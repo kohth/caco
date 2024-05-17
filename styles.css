@@ -8,6 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    overflow-y: auto;
 }
 
 .container {
@@ -17,6 +18,7 @@ body {
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    overflow: auto;
 }
 
 header {
@@ -34,6 +36,7 @@ header h1 {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .goals-section select, .buttons-section button {
@@ -140,6 +143,7 @@ header h1 {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .season, .final-score {
