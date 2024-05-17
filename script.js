@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Create grid cells
-    for (let i = 0; i < 11; i++) {
-        for (let j = 0; j < 11; j++) {
+    for (let i = 0; i < 12; i++) { // Adjusted to 12
+        for (let j = 0; j < 12; j++) { // Adjusted to 12
             const cell = document.createElement('div');
             const span = document.createElement('span');
             if (i === 0 || j === 0) {
@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateMonsters() {
         let monsterCount = 0;
         const countedCells = new Set();
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
                 if (cell.dataset.terrain === 'monster') {
                     monsterCount += countAdjacentEmptyCells(i, j, countedCells);
                 }
@@ -146,9 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
             [i, j - 1], [i, j + 1]
         ];
         adjacentCoords.forEach(([x, y]) => {
-            if (x > 0 && x < 11 && y > 0 && y < 11) {
-                const adjacentCell = grid.children[x * 11 + y];
-                const cellIndex = x * 11 + y;
+            if (x > 0 && x < 12 && y > 0 && y < 12) { // Adjusted to 12
+                const adjacentCell = grid.children[x * 12 + y]; // Adjusted to 12
+                const cellIndex = x * 12 + y; // Adjusted to 12
                 if (!adjacentCell.dataset.terrain && !countedCells.has(cellIndex)) {
                     count++;
                     countedCells.add(cellIndex);
@@ -229,12 +229,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scoring functions for each goal
     function scoreTheGoldenGranary() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
-                if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'ruins')) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
+                if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'ruin')) {
                     score++;
-                } else if (cell.dataset.terrain === 'farm' && cell.dataset.terrain === 'ruins') {
+                } else if (cell.dataset.terrain === 'farm' && cell.classList.contains('ruin')) {
                     score += 3;
                 }
             }
@@ -244,9 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreCanalLake() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
                 if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'farm')) {
                     score++;
                 } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'water')) {
@@ -276,9 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreMagesValley() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
                 if (cell.dataset.terrain === 'water' && isAdjacentTo(i, j, 'mountain')) {
                     score += 2;
                 } else if (cell.dataset.terrain === 'farm' && isAdjacentTo(i, j, 'mountain')) {
@@ -291,10 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreSentinelWood() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
-                if (cell.dataset.terrain === 'forest' && (i === 1 || i === 10 || j === 1 || j === 10)) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
+                if (cell.dataset.terrain === 'forest' && (i === 1 || i === 12 || j === 1 || j === 12)) {
                     score++;
                 }
             }
@@ -304,9 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreTreetower() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                const cell = grid.children[i * 11 + j];
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                const cell = grid.children[i * 12 + j]; // Adjusted to 12
                 if (cell.dataset.terrain === 'forest' && isSurrounded(i, j)) {
                     score++;
                 }
@@ -328,14 +328,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreGreenbough() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
             let rowHasForest = false;
             let colHasForest = false;
-            for (let j = 1; j < 11; j++) {
-                if (grid.children[i * 11 + j].dataset.terrain === 'forest') {
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                if (grid.children[i * 12 + j].dataset.terrain === 'forest') {
                     rowHasForest = true;
                 }
-                if (grid.children[j * 11 + i].dataset.terrain === 'forest') {
+                if (grid.children[j * 12 + i].dataset.terrain === 'forest') {
                     colHasForest = true;
                 }
             }
@@ -347,19 +347,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreLostBarony() {
         const filledSpaces = getLargestSquareOfFilledSpaces();
-        return filledSpaces.length * 3;
+        return Math.sqrt(filledSpaces.length) * 3; // Changed to square root of length
     }
 
     function scoreBorderlands() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
             let rowFilled = true;
             let colFilled = true;
-            for (let j = 1; j < 11; j++) {
-                if (!grid.children[i * 11 + j].dataset.terrain) {
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                if (!grid.children[i * 12 + j].dataset.terrain) {
                     rowFilled = false;
                 }
-                if (!grid.children[j * 11 + i].dataset.terrain) {
+                if (!grid.children[j * 12 + i].dataset.terrain) {
                     colFilled = false;
                 }
             }
@@ -371,9 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreTheCauldrons() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                if (!grid.children[i * 11 + j].dataset.terrain && isSurrounded(i, j)) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                if (!grid.children[i * 12 + j].dataset.terrain && isSurrounded(i, j)) {
                     score++;
                 }
             }
@@ -383,8 +383,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreTheBrokenRoad() {
         let score = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
                 if (isDiagonalLineOfFilledSpaces(i, j)) {
                     score += 3;
                 }
@@ -446,6 +446,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isAdjacentTo(x, y, terrain) {
         const adjacents = getAdjacentCells(x, y);
+        if (terrain === 'ruin') {
+            return adjacents.some(cell => cell.classList.contains('ruin'));
+        }
         return adjacents.some(cell => cell.dataset.terrain === terrain);
     }
 
@@ -456,8 +459,8 @@ document.addEventListener('DOMContentLoaded', () => {
             [x, y - 1], [x, y + 1]
         ];
         coords.forEach(([i, j]) => {
-            if (i > 0 && i < 11 && j > 0 && j < 11) {
-                adjacents.push(grid.children[i * 11 + j]);
+            if (i > 0 && i < 12 && j > 0 && j < 12) { // Adjusted to 12
+                adjacents.push(grid.children[i * 12 + j]); // Adjusted to 12
             }
         });
         return adjacents;
@@ -471,14 +474,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function getClusters(terrain) {
         const visited = new Set();
         const clusters = [];
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                if (grid.children[i * 11 + j].dataset.terrain === terrain && !visited.has(i * 11 + j)) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                if (grid.children[i * 12 + j].dataset.terrain === terrain && !visited.has(i * 12 + j)) { // Adjusted to 12
                     const cluster = [];
                     const stack = [[i, j]];
                     while (stack.length) {
                         const [x, y] = stack.pop();
-                        const cellIndex = x * 11 + y;
+                        const cellIndex = x * 12 + y; // Adjusted to 12
                         if (!visited.has(cellIndex)) {
                             visited.add(cellIndex);
                             cluster.push([x, y]);
@@ -506,11 +509,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getLargestSquareOfFilledSpaces() {
-        const dp = Array(11).fill().map(() => Array(11).fill(0));
+        const dp = Array(12).fill().map(() => Array(12).fill(0)); // Adjusted to 12
         let maxSquare = 0;
-        for (let i = 1; i < 11; i++) {
-            for (let j = 1; j < 11; j++) {
-                if (grid.children[i * 11 + j].dataset.terrain) {
+        for (let i = 1; i < 12; i++) { // Adjusted to 12
+            for (let j = 1; j < 12; j++) { // Adjusted to 12
+                if (grid.children[i * 12 + j].dataset.terrain) { // Adjusted to 12
                     dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
                     maxSquare = Math.max(maxSquare, dp[i][j]);
                 }

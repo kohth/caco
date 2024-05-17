@@ -59,7 +59,7 @@ header h1 {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(11, 1fr);
+    grid-template-columns: repeat(12, 1fr);
 }
 
 .grid div {
@@ -73,7 +73,7 @@ header h1 {
 }
 
 .grid div.ruin {
-    background-image: url('../images/ruins.svg');
+    background-image: url('ruins.svg');
     background-size: cover;
 }
 
