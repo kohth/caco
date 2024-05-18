@@ -360,15 +360,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scoreStonesideForest() {
+        const forestBinaryMap = makeBinaryMatrix('forest');
+        const mountainLocations = [];
+
+        // Mark mountain locations and store their coordinates
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === 'mountain') {
+                forestBinaryMap[i][j] = 2;
+                mountainLocations.push([i, j]);
+            }
+        });
+
         let score = 0;
-        const mountainClusters = getClusters('mountain');
-        mountainClusters.forEach(cluster => {
-            if (isClusterConnectedBy(cluster, 'forest')) {
+
+        mountainLocations.forEach(([x, y]) => {
+            const isConnected = [];
+            const cloneBinaryMap = forestBinaryMap.map(row => row.slice()); // Deep copy
+            cloneBinaryMap[x][y] = 1;
+            dfs(cloneBinaryMap, x, y, isConnected);
+            if (isConnected.includes(true)) {
                 score += 3;
             }
         });
+
         return score;
     }
+
+    function makeBinaryMatrix(terrainType) {
+        const binaryMap = Array.from({ length: 11 }, () => Array(11).fill(0));
+        iterateGrid((i, j, cell) => {
+            if (cell.dataset.terrain === terrainType) {
+                binaryMap[i][j] = 1;
+            }
+        });
+        return binaryMap;
+    }
+
+    function dfs(binaryMap, x, y, isConnected) {
+        const stack = [[x, y]];
+        const directions = [
+            [-1, 0], [1, 0],
+            [0, -1], [0, 1]
+        ];
+
+        while (stack.length) {
+            const [cx, cy] = stack.pop();
+            if (binaryMap[cx][cy] === 2) {
+                isConnected.push(true);
+            }
+            binaryMap[cx][cy] = 0;
+
+            directions.forEach(([dx, dy]) => {
+                const nx = cx + dx;
+                const ny = cy + dy;
+                if (nx >= 0 && nx < 11 && ny >= 0 && ny < 11 && binaryMap[nx][ny] !== 0) {
+                    stack.push([nx, ny]);
+                }
+            });
+        }
+    }
+
 
     function scoreGreenbough() {
         let score = 0;
@@ -526,7 +577,4 @@ document.addEventListener('DOMContentLoaded', () => {
         return adjacents.some(cell => cell.dataset.terrain === terrain);
     }
 
-    function isClusterConnectedBy(cluster, terrain) {
-        return cluster.every(([x, y]) => isAdjacentTo(x, y, terrain));
-    }
 });
