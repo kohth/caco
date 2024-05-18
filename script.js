@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initGrid();
     initCircleSlots();
     initListeners();
-    updateAll();
+    updateSeasonScores(currentSeason);
 
     function initDropdowns() {
         goalDropdowns.forEach(dropdownId => {
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cell.style.backgroundColor = terrainColors[selectedTerrain] || '';
             }
         }
-        updateAll();
+        updateSeasonScores(currentSeason);
     }
 
     function initCircleSlots() {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const circle = document.createElement('div');
             circle.addEventListener('click', () => {
                 circle.classList.toggle('filled');
-                updateAll();
+                updateSeasonScores(currentSeason);
             });
             circleSlots.appendChild(circle);
         }
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initListeners() {
         seasonSelect.addEventListener('change', () => {
             currentSeason = seasonSelect.value;
-            updateAll();
+            updateSeasonScores(currentSeason);
         });
 
         document.querySelectorAll('.terrain-btn').forEach(btn => {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('clear-coins').addEventListener('click', () => {
             document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
-            updateAll();
+            updateSeasonScores(currentSeason);
         });
 
         document.getElementById('clear-all').addEventListener('click', () => {
@@ -124,25 +124,25 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
             dropdown.addEventListener('change', () => {
                 updateGoals();
-                updateAll();
+                updateSeasonScores(currentSeason);
             });
         });
     }
 
-    function updateAll() {
-        updateCoins();
-        updateMonsters();
-        updateGoals();
-        updateSeasonTotal();
+    function updateSeasonScores(season) {
+        updateCoins(season);
+        updateMonsters(season);
+        updateGoals(season);
+        updateSeasonTotal(season);
         updateFinalScore();
     }
 
-    function updateCoins() {
+    function updateCoins(season) {
         const filledCoins = document.querySelectorAll('.circle-slots .filled').length;
-        document.getElementById(`${currentSeason}-coins`).value = filledCoins;
+        document.getElementById(`${season}-coins`).value = filledCoins;
     }
 
-    function updateMonsters() {
+    function updateMonsters(season) {
         let monsterCount = 0;
         const countedCells = new Set();
         iterateGrid((i, j, cell) => {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 monsterCount += countAdjacentEmptyCells(i, j, countedCells);
             }
         });
-        document.getElementById(`${currentSeason}-monsters`).value = -monsterCount;
+        document.getElementById(`${season}-monsters`).value = -monsterCount;
     }
 
     function countAdjacentEmptyCells(i, j, countedCells) {
@@ -176,13 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return x >= 0 && x < 11 && y >= 0 && y < 11;
     }
 
-    function updateSeasonTotal() {
-        const goal1 = parseInt(document.getElementById(`${currentSeason}-goal1`).value) || 0;
-        const goal2 = parseInt(document.getElementById(`${currentSeason}-goal2`).value) || 0;
-        const coins = parseInt(document.getElementById(`${currentSeason}-coins`).value) || 0;
-        const monsters = parseInt(document.getElementById(`${currentSeason}-monsters`).value) || 0;
+    function updateSeasonTotal(season) {
+        const goal1 = parseInt(document.getElementById(`${season}-goal1`).value) || 0;
+        const goal2 = parseInt(document.getElementById(`${season}-goal2`).value) || 0;
+        const coins = parseInt(document.getElementById(`${season}-coins`).value) || 0;
+        const monsters = parseInt(document.getElementById(`${season}-monsters`).value) || 0;
         const total = goal1 + goal2 + coins + monsters;
-        document.getElementById(`${currentSeason}-total`).value = total;
+        document.getElementById(`${season}-total`).value = total;
     }
 
     function updateFinalScore() {
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('final-score').value = finalScore;
     }
 
-    function updateGoals() {
+    function updateGoals(season) {
         const goalsMap = {
             'The Golden Granary': scoreTheGoldenGranary,
             'Canal Lake': scoreCanalLake,
@@ -220,11 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'winter': [document.getElementById('goalD').value, document.getElementById('goalA').value]
         };
 
-        ['spring', 'summer', 'fall', 'winter'].forEach(season => {
-            const [goal1, goal2] = goalsForSeason[season];
-            document.getElementById(`${season}-goal1`).value = goalsMap[goal1]();
-            document.getElementById(`${season}-goal2`).value = goalsMap[goal2]();
-        });
+        const [goal1, goal2] = goalsForSeason[season];
+        document.getElementById(`${season}-goal1`).value = goalsMap[goal1]();
+        document.getElementById(`${season}-goal2`).value = goalsMap[goal2]();
     }
 
     function iterateGrid(callback) {
