@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.classList.add('ruin');
         }
         if (isMountainTile(i, j)) {
-            cell.classList.add('mountain');
+            cell.dataset.terrain = 'mountain';
             cell.style.backgroundImage = "url('mountain.svg')";
         }
     }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleCellClick(cell) {
-        if (!cell.classList.contains('mountain')) {
+        if (cell.dataset.terrain !== 'mountain') {
             if (cell.dataset.terrain) {
                 cell.removeAttribute('data-terrain');
                 cell.style.backgroundColor = '';
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
             dropdown.addEventListener('change', () => {
-                updateGoals();
+                updateGoals(currentSeason);
                 updateSeasonScores(currentSeason);
             });
         });
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const visited = new Set();
         const clusters = [];
         iterateGrid((i, j, cell) => {
-            if (cell.dataset.terrain === terrain && !visited.has(i * 11 + j)) {
+            if ((cell.dataset.terrain === terrain) && !visited.has(i * 11 + j)) {
                 const cluster = [];
                 const stack = [[i, j]];
                 while (stack.length) {
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         visited.add(cellIndex);
                         cluster.push([x, y]);
                         getAdjacentCells(x, y).forEach(adj => {
-                            if (adj.dataset.terrain === terrain && !visited.has(adj.dataset.index)) {
+                            if ((adj.dataset.terrain === terrain) && !visited.has(adj.dataset.index)) {
                                 stack.push([parseInt(adj.dataset.row), parseInt(adj.dataset.col)]);
                             }
                         });
@@ -421,11 +421,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function scoreTheBrokenRoad() {
         let score = 0;
-        iterateGrid((i, j) => {
-            if (isDiagonalLineOfFilledSpaces(i, j)) {
+        // Check the diagonals starting from the top row
+        for (let i = 1; i < 11; i++) {
+            let currRoad = [];
+            let k = i;
+            for (let j = 10; j > 10 - i; j--) {
+                currRoad.push(grid.children[j * 11 + k-1].dataset.terrain || '');
+                k--;
+            }
+            if (!currRoad.includes('')) {
                 score += 3;
             }
-        });
+        }
         return score;
     }
 
@@ -509,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isAdjacentTo(x, y, terrain) {
         const adjacents = getAdjacentCells(x, y);
-        if (terrain === 'ruin' || terrain === 'mountain' ) {
+        if (terrain === 'ruin') {
             return adjacents.some(cell => cell.classList.contains(terrain));
         }
         return adjacents.some(cell => cell.dataset.terrain === terrain);
