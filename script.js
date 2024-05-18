@@ -248,7 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         visited.add(cellIndex);
                         cluster.push([x, y]);
                         getAdjacentCells(x, y).forEach(adj => {
-                            if ((adj.dataset.terrain === terrain) && !visited.has(adj.dataset.index)) {
+                            const adjIndex = parseInt(adj.dataset.row) * 11 + parseInt(adj.dataset.col);
+                            if (adj.dataset.terrain === terrain && !visited.has(adjIndex)) {
                                 stack.push([parseInt(adj.dataset.row), parseInt(adj.dataset.col)]);
                             }
                         });
@@ -268,7 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
         coords.forEach(([i, j]) => {
             if (isValidCoord(i, j)) {
-                adjacents.push(grid.children[i * 11 + j]);
+                const adjCell = grid.children[i * 11 + j];
+                adjCell.dataset.row = i;
+                adjCell.dataset.col = j;
+                adjacents.push(adjCell);
             }
         });
         return adjacents;
@@ -422,11 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function scoreTheBrokenRoad() {
         let score = 0;
         // Check the diagonals starting from the top row
-        for (let i = 1; i < 11; i++) {
+        for (let i = 0; i < 11; i++) {
             let currRoad = [];
             let k = i;
-            for (let j = 10; j > 10 - i; j--) {
-                currRoad.push(grid.children[j * 11 + k-1].dataset.terrain || '');
+            for (let j = 10; j >= 10 - i; j--) {
+                currRoad.push(grid.children[j * 11 + k].dataset.terrain || '');
                 k--;
             }
             if (!currRoad.includes('')) {
