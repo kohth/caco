@@ -203,7 +203,7 @@ header h1 {
 }
 
 /* Clear buttons */
-#clear-coins, #clear-all {
+#clear-all {
     width: 100%;
     max-width: 200px;
     padding: 10px;
