@@ -576,5 +576,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return adjacents.some(cell => cell.dataset.terrain === terrain);
     }
-
 });
