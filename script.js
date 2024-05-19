@@ -500,13 +500,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function scoreGreatCity() {
         let score = 0;
         const villageClusters = getClusters('village');
-        villageClusters.forEach(cluster => {
-            if (!isClusterAdjacentTo(cluster, 'mountain')) {
-                score += cluster.length;
-            }
-        });
+        const largestCluster = villageClusters.reduce((max, cluster) => cluster.length > max.length ? cluster : max, []);
+
+        if (largestCluster.length > 0 && !isClusterAdjacentTo(largestCluster, 'mountain')) {
+            score = largestCluster.length;
+        }
+
         return score;
     }
+
 
     function scoreShieldgate() {
         const villageClusters = getClusters('village');
