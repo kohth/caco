@@ -199,11 +199,11 @@ header h1 {
 
 .season-total input {
     grid-column: span 2;
-    
+
 }
 
 /* Clear buttons */
-#clear-coins, #clear-all {
+#clear-all {
     width: 100%;
     max-width: 200px;
     padding: 10px;
@@ -213,9 +213,6 @@ header h1 {
     border-radius: 4px;
     background-color: #ffcccc;
     cursor: pointer;
-}
-
-#clear-all {
     background-color: #ff9999;
 }
 

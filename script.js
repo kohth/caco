@@ -107,11 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        document.getElementById('clear-coins').addEventListener('click', () => {
-            document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
-            updateSeasonScores(currentSeason);
-        });
-
         document.getElementById('clear-all').addEventListener('click', () => {
             document.querySelectorAll('.grid div').forEach(cell => {
                 cell.removeAttribute('data-terrain');
