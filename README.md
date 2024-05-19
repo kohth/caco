@@ -3,7 +3,13 @@ Cartographers' Companion App (CaCo)
 
 A companion app for marking a map and counting scores in the game Cartographers. This app is intended to be used alongside a physical copy of the game.
 
-CaCo is fanmade and is in no way associated with Thunderworks Games
+CaCo is fanmade and is in no way associated with Thunderworks Games. 
+
+More recently, with the help of chatGPT 4o, I managed to make a webapp version of the app, which can be found at
+
+kohth.github.io/caco
+
+This removes the need to install an app, and allows cross-platform usage.
 
 Introduction
 -----------
