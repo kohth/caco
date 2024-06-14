@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if !(cell.dataset.terrain==='mountain'){
                 cell.removeAttribute('data-terrain');
                 cell.style.backgroundColor = '';
-                }
+                };
             });
             document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
             document.querySelectorAll('.season-grid input, .season-total input, .final-score input').forEach(input => input.value = '');
