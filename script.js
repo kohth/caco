@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedTerrain = null;
     let currentSeason = seasonSelect.value;
 
+    // Track which mountains have already been filled for coin
+    const filledMountains = new Set();
+
     initDropdowns();
     initGrid();
     initCircleSlots();
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isMountainTile(i, j)) {
             cell.dataset.terrain = 'mountain';
             cell.style.backgroundImage = "url('mountain.svg')";
+            cell.dataset.mountain = "true";
         }
     }
 
@@ -79,13 +83,74 @@ document.addEventListener('DOMContentLoaded', () => {
                 cell.style.backgroundColor = terrainColors[selectedTerrain] || '';
             }
         }
+        // After any cell click, check for surrounded mountains
+        checkMountainsSurroundedAndAwardCoin();
         updateSeasonScores(currentSeason);
+    }
+
+    function checkMountainsSurroundedAndAwardCoin() {
+        // For each mountain, if surrounded and not already filled, fill and award coin
+        for (let i = 0; i < 11; i++) {
+            for (let j = 0; j < 11; j++) {
+                const idx = i * 11 + j;
+                const cell = grid.children[idx];
+                if (cell && cell.dataset.terrain === 'mountain') {
+                    // Use a unique key for this mountain
+                    const key = `${i},${j}`;
+                    if (isSurrounded(i, j)) {
+                        // If not already filled, fill and award coin
+                        if (!filledMountains.has(key)) {
+                            cell.style.backgroundImage = "url('mountain_filled.svg')";
+                            filledMountains.add(key);
+                            fillNextMountainCoin();
+                        } else {
+                            // Already filled, ensure correct image
+                            cell.style.backgroundImage = "url('mountain_filled.svg')";
+                        }
+                    } else {
+                        // Not surrounded, revert to normal mountain if previously filled
+                        if (filledMountains.has(key)) {
+                            cell.style.backgroundImage = "url('mountain.svg')";
+                            filledMountains.delete(key);
+                            removeLastMountainCoin();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    function fillNextMountainCoin() {
+        // Find the first unfilled coin slot from the left and fill it with mountain indicator
+        const circles = circleSlots.querySelectorAll('div');
+        for (let i = 0; i < circles.length; i++) {
+            if (!circles[i].classList.contains('filled')) {
+                circles[i].classList.add('filled', 'mountain-coin');
+                break;
+            }
+        }
+    }
+
+    function removeLastMountainCoin() {
+        // Find the rightmost filled mountain coin slot and remove it
+        const circles = circleSlots.querySelectorAll('div');
+        for (let i = circles.length - 1; i >= 0; i--) {
+            if (circles[i].classList.contains('filled') && circles[i].classList.contains('mountain-coin')) {
+                circles[i].classList.remove('filled', 'mountain-coin');
+                break;
+            }
+        }
     }
 
     function initCircleSlots() {
         for (let i = 0; i < 14; i++) {
             const circle = document.createElement('div');
             circle.addEventListener('click', () => {
+                // Don't allow manual toggling of mountain coins
+                if (circle.classList.contains('mountain-coin')) {
+                    return;
+                }
                 circle.classList.toggle('filled');
                 updateSeasonScores(currentSeason);
             });
@@ -113,11 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     cell.removeAttribute('data-terrain');
                     cell.style.backgroundColor = '';
                 }
+                // Reset mountain images
+                if (cell.dataset.terrain === 'mountain' || cell.dataset.mountain === "true") {
+                    cell.style.backgroundImage = "url('mountain.svg')";
+                }
             });
-            document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
+            document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled', 'mountain-coin'));
             document.querySelectorAll('.season-grid input, .season-total input, .final-score input').forEach(input => input.value = '');
             seasonSelect.value = 'spring';
             currentSeason = 'spring';
+            filledMountains.clear();
         });
 
         document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {

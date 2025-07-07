@@ -153,6 +153,23 @@ header h1 {
     background-color: yellow;
 }
 
+.circle-slots div.filled.mountain-coin {
+    position: relative;
+}
+
+.circle-slots div.filled.mountain-coin::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid #8B4513;
+}
+
 /* Scorecard section */
 .scorecard-section {
     display: flex;
