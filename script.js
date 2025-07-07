@@ -109,13 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('clear-all').addEventListener('click', () => {
             document.querySelectorAll('.grid div').forEach(cell => {
-                if (cell.dataset.terrain!=='mountain'){
-                 cell.removeAttribute('data-terrain');
-                 cell.style.backgroundColor = '';
-                };
+                if (cell.dataset.terrain !== 'mountain') {
+                    cell.removeAttribute('data-terrain');
+                    cell.style.backgroundColor = '';
+                }
             });
             document.querySelectorAll('.circle-slots .filled').forEach(circle => circle.classList.remove('filled'));
             document.querySelectorAll('.season-grid input, .season-total input, .final-score input').forEach(input => input.value = '');
+            seasonSelect.value = 'spring';
+            currentSeason = 'spring';
         });
 
         document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
