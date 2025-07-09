@@ -23,19 +23,20 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 header h1 {
-    font-size: 24px;
+    font-size: 20px;
     margin: 0;
+    color: #495057;
 }
 
 /* Goal and button sections */
 .goals-section, .buttons-section, .season-section {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     flex-wrap: nowrap;
 }
 
@@ -80,7 +81,7 @@ header h1 {
 .grid-section {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .grid {
@@ -127,24 +128,24 @@ header h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .circle-slots {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 10px;
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
 }
 
 .circle-slots div {
     width: 100%;
     padding-bottom: 100%;
     border-radius: 50%;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     cursor: pointer;
     background-color: #fff;
 }
@@ -175,48 +176,69 @@ header h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .seasons-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 .season, .final-score {
     flex: 1;
-    max-width: 250px;
+    min-width: 120px;
+    max-width: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 8px;
+    border: 1px solid #e9ecef;
 }
 
 .season h3, .final-score h3 {
-    margin: 5px 0;
-    font-size: 18px;
+    margin: 2px 0 6px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #495057;
 }
 
 .season-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 5px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 3px;
+    width: 100%;
 }
 
 .season-grid input, .season-total input, .final-score input {
-    width: 90%;
-    padding: 5px;
+    width: 100%;
+    padding: 3px;
     text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    font-size: 12px;
+    box-sizing: border-box;
 }
 
 .season-total input {
     grid-column: span 2;
-    
+    background-color: #e9ecef;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.final-score input {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 6px;
 }
 
 /* Clear buttons */
@@ -239,23 +261,128 @@ header h1 {
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
     .goals-section, .buttons-section, .season-section {
         flex-direction: row;
         align-items: center;
+        margin-bottom: 8px;
     }
 
     .goals-section input, .buttons-section button {
         width: 80%;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .grid {
-        grid-template-columns: repeat(11, 1fr);
-        grid-template-rows: repeat(11, 1fr);
+        max-width: 350px;
+        margin-bottom: 8px;
     }
 
     .circle-slots {
-        grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        max-width: 250px;
+        gap: 3px;
+    }
+    
+    .scorecard-section {
+        gap: 8px;
+    }
+    
+    .seasons-row {
+        gap: 5px;
+    }
+    
+    .season, .final-score {
+        min-width: 80px;
+        max-width: 120px;
+        padding: 6px;
+    }
+    
+    .season h3, .final-score h3 {
+        font-size: 12px;
+        margin: 1px 0 4px 0;
+    }
+    
+    .season-grid {
+        gap: 2px;
+    }
+    
+    .season-grid input, .season-total input {
+        font-size: 11px;
+        padding: 2px;
+    }
+    
+    .final-score input {
+        font-size: 12px;
+        padding: 4px;
+    }
+    
+    #clear-all {
+        padding: 8px;
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 18px;
+    }
+    
+    .goals-section, .buttons-section, .season-section {
+        margin-bottom: 6px;
+    }
+    
+    .goal-input {
+        width: 120px;
+        font-size: 12px;
+        padding: 3px;
+    }
+    
+    .buttons-section button {
+        width: 15%;
+        font-size: 11px;
+        padding: 3px;
+    }
+    
+    .grid {
+        max-width: 300px;
+    }
+    
+    .circle-slots {
+        max-width: 200px;
+        gap: 2px;
+    }
+    
+    .seasons-row {
+        gap: 3px;
+    }
+    
+    .season, .final-score {
+        min-width: 70px;
+        max-width: 100px;
+        padding: 4px;
+    }
+    
+    .season h3, .final-score h3 {
+        font-size: 11px;
+        margin: 0 0 3px 0;
+    }
+    
+    .season-grid input, .season-total input {
+        font-size: 10px;
+        padding: 1px;
+    }
+    
+    .final-score input {
+        font-size: 11px;
+        padding: 3px;
     }
 }
