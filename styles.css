@@ -184,16 +184,33 @@ header h1 {
 
 .seasons-row {
     display: flex;
-    justify-content: space-between;
     width: 100%;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.season, .final-score {
+.final-score-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.season {
     flex: 1;
     min-width: 120px;
-    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.final-score {
+    max-width: 200px;
+    min-width: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -297,9 +314,18 @@ header h1 {
         gap: 5px;
     }
     
-    .season, .final-score {
+    .final-score-row {
+        margin-top: 8px;
+    }
+    
+    .season {
         min-width: 80px;
-        max-width: 120px;
+        padding: 6px;
+    }
+    
+    .final-score {
+        max-width: 160px;
+        min-width: 80px;
         padding: 6px;
     }
     
@@ -369,9 +395,18 @@ header h1 {
         gap: 3px;
     }
     
-    .season, .final-score {
+    .final-score-row {
+        margin-top: 6px;
+    }
+    
+    .season {
         min-width: 70px;
-        max-width: 100px;
+        padding: 4px;
+    }
+    
+    .final-score {
+        max-width: 140px;
+        min-width: 70px;
         padding: 4px;
     }
     
