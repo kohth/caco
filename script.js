@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const circleSlots = document.querySelector('.circle-slots');
     let selectedTerrain = null;
     let currentSeason = seasonSelect.value;
+    
+    const seasons = ['spring', 'summer', 'fall', 'winter'];
 
     // Track which mountains have already been filled for coin
     const filledMountains = new Set();
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initGrid();
     initCircleSlots();
     initListeners();
-    updateSeasonScores(currentSeason);
+    updateSeasonDisplay();
 
     function initDropdowns() {
         goalInputs.forEach(inputId => {
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initListeners() {
         seasonSelect.addEventListener('change', () => {
             currentSeason = seasonSelect.value;
+            updateSeasonDisplay();
             updateSeasonScores(currentSeason);
         });
 
@@ -186,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.season-grid input, .season-total input, .final-score input').forEach(input => input.value = '');
             seasonSelect.value = 'spring';
             currentSeason = 'spring';
+            updateSeasonDisplay();
             filledMountains.clear();
         });
 
@@ -194,6 +198,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateGoals(currentSeason);
                 updateSeasonScores(currentSeason);
             });
+        });
+    }
+
+    function updateSeasonDisplay() {
+        // Remove all active/inactive classes first
+        document.querySelectorAll('.season').forEach(season => {
+            season.classList.remove('active', 'inactive');
+        });
+        
+        // Add active class to current season and inactive to others
+        seasons.forEach(season => {
+            const seasonElement = document.getElementById(season);
+            if (season === currentSeason) {
+                seasonElement.classList.add('active');
+            } else {
+                seasonElement.classList.add('inactive');
+            }
         });
     }
 

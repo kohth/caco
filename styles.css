@@ -206,6 +206,23 @@ header h1 {
     border-radius: 6px;
     padding: 8px;
     border: 1px solid #e9ecef;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.season.inactive {
+    opacity: 0.4;
+    background-color: #f0f0f0;
+}
+
+.season.active {
+    opacity: 1;
+    background-color: #e3f2fd;
+    border-color: #007bff;
+}
+
+.season.inactive input {
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .final-score {
