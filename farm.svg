@@ -1,0 +1,18 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Yellow background -->
+  <rect width="100" height="100" fill="#FFD700" />
+  
+  <!-- Diagonal stripes pattern -->
+  <defs>
+    <pattern id="farmStripes" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#FFD700" />
+      <rect width="5" height="10" fill="#FFA500" />
+    </pattern>
+  </defs>
+  
+  <!-- Apply stripes -->
+  <rect width="100" height="100" fill="url(#farmStripes)" />
+  
+  <!-- Border -->
+  <rect width="100" height="100" fill="none" stroke="#000" stroke-width="2" />
+</svg> 

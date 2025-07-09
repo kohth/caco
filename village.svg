@@ -1,0 +1,36 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Red background -->
+  <rect width="100" height="100" fill="#DC143C" />
+  
+  <!-- Houses -->
+  <g fill="#8B0000" stroke="#000" stroke-width="1">
+    <!-- Left house -->
+    <rect x="10" y="60" width="25" height="30" />
+    <path d="M10 60 L22.5 40 L35 60 Z" />
+    
+    <!-- Center house -->
+    <rect x="40" y="50" width="20" height="40" />
+    <path d="M40 50 L50 30 L60 50 Z" />
+    
+    <!-- Right house -->
+    <rect x="65" y="65" width="25" height="25" />
+    <path d="M65 65 L77.5 45 L90 65 Z" />
+  </g>
+  
+  <!-- Windows and doors -->
+  <g fill="#FFD700">
+    <!-- Left house windows -->
+    <rect x="15" y="70" width="6" height="6" />
+    <rect x="24" y="70" width="6" height="6" />
+    
+    <!-- Center house window -->
+    <rect x="47" y="60" width="6" height="6" />
+    
+    <!-- Right house windows -->
+    <rect x="70" y="75" width="6" height="6" />
+    <rect x="79" y="75" width="6" height="6" />
+  </g>
+  
+  <!-- Border -->
+  <rect width="100" height="100" fill="none" stroke="#000" stroke-width="2" />
+</svg> 

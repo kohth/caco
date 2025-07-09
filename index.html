@@ -14,27 +14,31 @@
         <section class="goals-section">
             <div class="goal-container">
                 <label for="goalA" class="goal-label">A</label>
-                <select id="goalA" class="goal-select"></select>
+                <input type="text" id="goalA" class="goal-input" list="goalA-list" placeholder="Type to search goals...">
+                <datalist id="goalA-list"></datalist>
             </div>
             <div class="goal-container">
                 <label for="goalB" class="goal-label">B</label>
-                <select id="goalB" class="goal-select"></select>
+                <input type="text" id="goalB" class="goal-input" list="goalB-list" placeholder="Type to search goals...">
+                <datalist id="goalB-list"></datalist>
             </div>
             <div class="goal-container">
                 <label for="goalC" class="goal-label">C</label>
-                <select id="goalC" class="goal-select"></select>
+                <input type="text" id="goalC" class="goal-input" list="goalC-list" placeholder="Type to search goals...">
+                <datalist id="goalC-list"></datalist>
             </div>
             <div class="goal-container">
                 <label for="goalD" class="goal-label">D</label>
-                <select id="goalD" class="goal-select"></select>
+                <input type="text" id="goalD" class="goal-input" list="goalD-list" placeholder="Type to search goals...">
+                <datalist id="goalD-list"></datalist>
             </div>
         </section>
         <section class="buttons-section">
             <button class="terrain-btn" data-terrain="farm" style="background-color: yellow;">Farm</button>
             <button class="terrain-btn" data-terrain="water" style="background-color: lightblue;">Water</button>
-            <button class="terrain-btn" data-terrain="village" style="background-color: red;">Village</button>
+            <button class="terrain-btn" data-terrain="village" style="color:white; background-color: red;">Village</button>
             <button class="terrain-btn" data-terrain="forest" style="background-color: green;">Forest</button>
-            <button class="terrain-btn" data-terrain="monster" style="background-color: purple;">Monster</button>
+            <button class="terrain-btn" data-terrain="monster" style="color:white; background-color: purple;">Monster</button>
         </section>
         <section class="season-section">
             <label for="season">Current Season:</label>
@@ -101,7 +105,9 @@
                 </div>
             </div>
         </section>
-        <button id="clear-all">Clear All</button>
+        <div style="text-align: center;">
+            <button id="clear-all">Clear All</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

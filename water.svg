@@ -1,0 +1,19 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Light blue background -->
+  <rect width="100" height="100" fill="#87CEEB" />
+  
+  <!-- Wave patterns -->
+  <g stroke="#4682B4" stroke-width="3" fill="none">
+    <!-- Top waves -->
+    <path d="M0 25 Q25 15 50 25 T100 25" />
+    <path d="M0 40 Q25 30 50 40 T100 40" />
+    <!-- Middle waves -->
+    <path d="M0 55 Q25 45 50 55 T100 55" />
+    <path d="M0 70 Q25 60 50 70 T100 70" />
+    <!-- Bottom waves -->
+    <path d="M0 85 Q25 75 50 85 T100 85" />
+  </g>
+  
+  <!-- Border -->
+  <rect width="100" height="100" fill="none" stroke="#000" stroke-width="2" />
+</svg> 

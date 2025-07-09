@@ -42,13 +42,7 @@ header h1 {
 .goal-container {
     text-align: center;
 }
-/*.goals-section select{
-    width: 20%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}*/
+
 
 .goal-label {
     font-weight: bold;
@@ -56,9 +50,13 @@ header h1 {
     margin-bottom: 5px;
 }
 
-.goal-select {
+.goal-input {
     width: 150px;
     margin: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
 .buttons-section button {
@@ -101,6 +99,8 @@ header h1 {
     border: 1px solid #ccc;
     aspect-ratio: 1;
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .grid div span {
@@ -244,7 +244,7 @@ header h1 {
         align-items: center;
     }
 
-    .goals-section select, .buttons-section button {
+    .goals-section input, .buttons-section button {
         width: 80%;
         margin-bottom: 10px;
     }

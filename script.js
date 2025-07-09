@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Wildholds', 'Great City', 'Shieldgate', 'Greengold Plains'
     ];
 
-    const goalDropdowns = ['goalA', 'goalB', 'goalC', 'goalD'];
+    const goalInputs = ['goalA', 'goalB', 'goalC', 'goalD'];
     const terrainColors = {
         'farm': 'yellow',
         'water': 'lightblue',
@@ -30,13 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSeasonScores(currentSeason);
 
     function initDropdowns() {
-        goalDropdowns.forEach(dropdownId => {
-            const select = document.getElementById(dropdownId);
+        goalInputs.forEach(inputId => {
+            const datalist = document.getElementById(`${inputId}-list`);
             goals.forEach(goal => {
                 const option = document.createElement('option');
                 option.value = goal;
-                option.innerText = goal;
-                select.appendChild(option);
+                datalist.appendChild(option);
             });
         });
     }
@@ -190,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
             filledMountains.clear();
         });
 
-        document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(dropdown => {
-            dropdown.addEventListener('change', () => {
+        document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(goalInput => {
+            goalInput.addEventListener('input', () => {
                 updateGoals(currentSeason);
                 updateSeasonScores(currentSeason);
             });
