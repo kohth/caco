@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCircleSlots();
     initListeners();
     updateSeasonDisplay();
+    initDefaultTerrain();
 
     function initDropdowns() {
         goalInputs.forEach(inputId => {
@@ -191,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentSeason = 'spring';
             updateSeasonDisplay();
             filledMountains.clear();
+            initDefaultTerrain();
         });
 
         document.querySelectorAll('#goalA, #goalB, #goalC, #goalD').forEach(goalInput => {
@@ -199,6 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateSeasonScores(currentSeason);
             });
         });
+    }
+
+    function initDefaultTerrain() {
+        const farmButton = document.querySelector('.terrain-btn[data-terrain="farm"]');
+        if (farmButton) {
+            selectedTerrain = 'farm';
+            document.querySelectorAll('.terrain-btn').forEach(b => b.classList.remove('selected'));
+            farmButton.classList.add('selected');
+        }
     }
 
     function updateSeasonDisplay() {
